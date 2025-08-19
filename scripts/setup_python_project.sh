@@ -88,26 +88,39 @@ main() {
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     
     # Run setup steps
-    "$SCRIPT_DIR/scripts/01_check_dependencies.sh" "$VENV_TOOL" "$CREATE_VENV" "$SETUP_GIT" "$INSTALL_VSCODE_CONFIG"
-    "$SCRIPT_DIR/scripts/02_create_structure.sh" "$PROJECT_NAME" "$@"
+    "$SCRIPT_DIR/01_check_dependencies.sh" "$VENV_TOOL" "$CREATE_VENV" "$SETUP_GIT" "$INSTALL_VSCODE_CONFIG"
+    "$SCRIPT_DIR/02_create_structure.sh" "$PROJECT_NAME" "$@"
     
-    if [[ "$CREATE_VENV" == true ]]; then
-        "$SCRIPT_DIR/scripts/03_create_venv.sh" "$VENV_TOOL" "$PYTHON_VERSION"
+    # Change to project directory if not existing project
+    existing_project=false
+    for arg in "$@"; do
+        if [[ "$arg" == "--existing" ]]; then
+            existing_project=true
+            break
+        fi
+    done
+    
+    if [[ "$existing_project" != true ]]; then
+        cd "$PROJECT_NAME"
     fi
     
-    "$SCRIPT_DIR/scripts/04_create_configs.sh" "$PROJECT_NAME" "$SETUP_GITHUB_ACTIONS"
-    "$SCRIPT_DIR/scripts/05_install_deps.sh" "$VENV_TOOL" "$CREATE_VENV"
+    if [[ "$CREATE_VENV" == true ]]; then
+        "$SCRIPT_DIR/03_create_venv.sh" "$VENV_TOOL" "$PYTHON_VERSION"
+    fi
+    
+    "$SCRIPT_DIR/04_create_configs.sh" "$PROJECT_NAME" "$SETUP_GITHUB_ACTIONS"
+    "$SCRIPT_DIR/05_install_deps.sh" "$VENV_TOOL" "$CREATE_VENV"
     
     if [[ "$SETUP_GIT" == true ]]; then
-        "$SCRIPT_DIR/scripts/06_setup_git.sh"
+        "$SCRIPT_DIR/06_setup_git.sh"
     fi
     
     if [[ "$INSTALL_VSCODE_CONFIG" == true ]]; then
-        "$SCRIPT_DIR/scripts/07_install_vscode.sh"
+        "$SCRIPT_DIR/07_install_vscode.sh"
     fi
     
-    "$SCRIPT_DIR/scripts/08_verify_setup.sh"
-    "$SCRIPT_DIR/scripts/09_show_summary.sh" "$PROJECT_NAME" "$PYTHON_VERSION" "$VENV_TOOL" "$CREATE_VENV"
+    "$SCRIPT_DIR/08_verify_setup.sh"
+    "$SCRIPT_DIR/09_show_summary.sh" "$PROJECT_NAME" "$PYTHON_VERSION" "$VENV_TOOL" "$CREATE_VENV"
     
     print_success "Setup completed! 🎉"
 }

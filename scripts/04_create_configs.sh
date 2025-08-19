@@ -63,6 +63,9 @@ Homepage = "https://github.com/yourusername/$PROJECT_NAME"
 Repository = "https://github.com/yourusername/$PROJECT_NAME"
 Issues = "https://github.com/yourusername/$PROJECT_NAME/issues"
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/$PROJECT_NAME"]
+
 [tool.ruff]
 target-version = "py38"
 line-length = 88
@@ -314,6 +317,8 @@ EOF
 fi
 
 # Create __init__.py files
+mkdir -p src/"$PROJECT_NAME"
+mkdir -p tests
 touch src/"$PROJECT_NAME"/__init__.py
 touch tests/__init__.py
 
