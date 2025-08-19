@@ -8,7 +8,7 @@ A comprehensive set of bash scripts to quickly set up Python projects with moder
 
 ```bash
 # Clone or download this repository
-git clone <repository-url>
+git clone https://github.com/halprez/dev_tools
 cd dev_tools
 
 # Install the tools system-wide
@@ -22,7 +22,7 @@ python-project-setup my-awesome-project
 
 ```bash
 # Clone or download this repository
-git clone <repository-url>
+git clone https://github.com/halprez/dev_tools
 cd dev_tools
 
 # Set up a new Python project
@@ -41,7 +41,7 @@ The `install.sh` script provides easy system-wide installation:
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/halprez/dev_tools
 cd dev_tools
 
 # Install to ~/.local/bin (default, no sudo needed)
@@ -353,14 +353,6 @@ The setup includes Git configuration with:
 - **Pre-commit hooks** - Automatic code quality checks
 - **Initial commit** - Ready-to-push first commit
 
-### Git Commands
-```bash
-git status                    # Check repository status
-git add .                     # Stage changes
-git commit -m "Your message"  # Commit with pre-commit checks
-git push                      # Push to remote repository
-```
-
 ## 🧪 Testing Setup
 
 Pytest is configured with:
@@ -563,3 +555,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - **Pytest** - For excellent testing framework
 - **uv** - For fast Python package management
 - **VSCode** - For excellent Python development support
+- **Anthropic** - For Claude code
